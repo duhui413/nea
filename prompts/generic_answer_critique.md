@@ -1,0 +1,11 @@
+---
+template_version: nea-0032-v1
+stage_id: generic_answer_critique
+stage_kind: llm_prompt
+input_schema_version: 2
+output_schema_version: 3
+---
+
+通用审阅原问题与answer的正确性、切题、充分性和清晰度，使用相同允许证据。不得获得NEA四模块或内部指标诊断。status=issues/no_issue/uncertain；后两者issues为空。不为修订而制造问题；每个问题给原文span或question_anchor、reason、evidence_status及evidence_ids，最多3条。
+每项填写scope_effect和necessity_reason。只纠正现有表述、删除冗余或澄清原内容用scope_effect=correction，necessity_reason可为空。要求增加原文未承担的解释、知识或步骤用scope_effect=add_obligation，必须给非空question_anchor及necessity_reason，说明省略该新增内容会怎样妨碍回答所引题面。相关chunk并不使其成为必答项，尤其不能凭相关性声称“最容易、常见、必须”。
+span逐字复制answer中恰好出现一次的短连续原文，保留标点、空格、空行、Markdown和数学符号；不得改写、拼接或省略中间文本。question_anchor只复制question连续原文；不用的字段填空字符串，至少一个非空。两字段都填写时都必须合法；只用question_anchor定位时该片段须在问题中唯一。证据ID仅用本题knowledge_chunks的chunk_id，PE填空数组。

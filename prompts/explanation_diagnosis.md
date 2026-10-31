@@ -1,0 +1,13 @@
+---
+template_version: nea-0032-v1
+stage_id: explanation_diagnosis
+stage_kind: llm_prompt
+input_schema_version: 2
+output_schema_version: 3
+---
+
+依据原任务、obligations、父答案和允许证据诊断，不依赖旧指标触发或概念覆盖率制造缺陷。status=issues/no_issue/uncertain；无实质缺陷为no_issue，证据不足为uncertain，后二者actions必须为空。
+定位anchor为父答案原文片段；遗漏可用相关句作插入锚点，或用问题原文的question_anchor说明遗漏义务。每项说明reason、evidence_status和evidence_ids；仅known支持的support或可复核reasoning允许修订，冲突/未知保留uncertain。
+span必须逐字复制answer中恰好出现一次的短连续原文，保留空格、空行、标点、Markdown及数学符号；不能转述、拼接、删空白或使用省略号代替原文。question_anchor只能复制question的连续原文；不用的定位字段填空字符串，至少一个非空。两字段都填写时两者都必须合法；只用question_anchor定位时该片段必须在问题中唯一。
+action为add或bridge，或type为task_omission、term_gap、step_gap时，必须填写非空question_anchor和necessity_reason：解释省略这项内容会怎样妨碍回答所引题面。相关知识、图节点、obligations或已有chunk不能自行制造必答项；不能把生成的义务文字当作题面引文。对“最容易、常见、必须”等限定须有相应依据，存在相关证据不等于具有这种性质。其余compress/rewrite动作无需necessity_reason字段；纠正父文事实错误不要求编造新增义务。
+固定映射term_gap→T_EXP、step_gap→D_EXP、logical_jump→D_CON、term_excess→T_CON、step_excess→D_CON。task_omission及factual_error是共享任务/正确性保障，module=shared，不是第五模块。动作add/compress/bridge/rewrite，允许纠正事实、归约方向、错误条件句及错引。最多3项，不重叠、不凭空补错。

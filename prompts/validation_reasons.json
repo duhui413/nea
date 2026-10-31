@@ -1,0 +1,10 @@
+{
+  "json_syntax_error": "strict_json_required: Return exactly one valid JSON object without Markdown fences or extra text.",
+  "schema_validation_error": "schema_constraint: Match every field, type, enum and bound in the supplied JSON Schema.",
+  "business_validation_error": "business_constraint: Follow the supplied stage contract and use nonempty field values.",
+  "refusal": "provider_refusal: The provider refused the response; generate a complete response if permitted.",
+  "output_truncated": "output_truncated: The response exceeded the output limit; return a shorter complete response.",
+  "empty_answer": "empty_answer: Return a nonempty Markdown answer.",
+  "json_or_code_fence_prefix": "json_or_code_fence_prefix: Return Markdown prose; do not start with JSON or a code fence.",
+  "unavailable_citation": "unavailable_citation: Cite only evidence IDs supplied in this request; remove every unavailable citation."
+}
